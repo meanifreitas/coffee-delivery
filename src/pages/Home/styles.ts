@@ -3,9 +3,21 @@ import styled from 'styled-components'
 export const HomeContainer = styled.main`
   margin-top: 5.875rem;
   display: flex;
+  flex-direction: column;
   gap: 3.5rem;
 
-  @media (max-width: 720px) {
+  & > h1 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+`
+
+export const InfoContainer = styled.div`
+  display: flex;
+
+  @media (max-width: 1024px) {
     flex-direction: column;
   }
 `
@@ -78,4 +90,10 @@ export const Subtitle = styled.h3`
   font-weight: 400;
   font-size: 1.25rem;
   color: ${(props) => props.theme['base-subtitle']};
+`
+
+export const CoffeeList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
 `
