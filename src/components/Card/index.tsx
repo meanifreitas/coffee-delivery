@@ -12,7 +12,6 @@ import {
 } from './styles'
 
 interface CardProps {
-  id: string
   title: string
   description: string
   tags: string[]
@@ -20,14 +19,7 @@ interface CardProps {
   image: string
 }
 
-export function Card({
-  id,
-  title,
-  description,
-  tags,
-  price,
-  image,
-}: CardProps) {
+export function Card({ title, description, tags, price, image }: CardProps) {
   return (
     <CardContainer>
       <CoffeeImage src={image} alt={title} />
