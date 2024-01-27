@@ -122,6 +122,7 @@ export const CoffeesContainer = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 23rem;
 `
 
 export const CoffeesList = styled.div`
