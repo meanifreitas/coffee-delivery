@@ -3,12 +3,15 @@ import { defaultTheme } from './styles/themes/default'
 import { GLobalStyle } from './styles/global'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
+import { CartProvider } from './contexts/CartProvider'
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <Router />
+        <CartProvider>
+          <Router />
+        </CartProvider>
       </BrowserRouter>
       <GLobalStyle />
     </ThemeProvider>

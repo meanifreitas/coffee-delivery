@@ -50,6 +50,10 @@ export const AddressForm = styled.div`
 
   .reference,
   .city {
+    max-width: 100%;
+  }
+
+  .reference {
     width: 100%;
   }
 `

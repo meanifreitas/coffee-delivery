@@ -105,26 +105,6 @@ export const CartContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 60%;
-
-  div {
-    display: flex;
-    gap: 0.25rem;
-    background: ${(props) => props.theme['base-button']};
-    padding: 0.5rem;
-    border-radius: 6px;
-
-    button {
-      background: ${(props) => props.theme['base-button']};
-      color: ${(props) => props.theme.purple};
-    }
-
-    span {
-      color: ${(props) => props.theme['base-title']};
-      font-size: 1rem;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 400;
-    }
-  }
 `
 
 export const Cart = styled.button`

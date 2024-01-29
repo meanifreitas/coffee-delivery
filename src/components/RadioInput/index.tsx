@@ -5,18 +5,12 @@ interface Props {
   children?: ReactNode
   value: string
   isSelected: boolean
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export function RadioInput({ children, value, isSelected, onChange }: Props) {
+export function RadioInput({ children, value, isSelected }: Props) {
   return (
     <InputContainer>
-      <input
-        type="radio"
-        value={value}
-        checked={isSelected}
-        onChange={onChange}
-      />
+      <input type="radio" value={value} checked={isSelected} />
       {children}
     </InputContainer>
   )

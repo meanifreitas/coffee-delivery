@@ -10,6 +10,7 @@ import {
   CartContainer,
   Cart,
 } from './styles'
+import { AddOrRemoveCoffee } from '../AddOrRemoveCoffee'
 
 interface CardProps {
   title: string
@@ -36,15 +37,7 @@ export function Card({ title, description, tags, price, image }: CardProps) {
           <p>{price}</p>
         </Price>
         <CartContainer>
-          <div>
-            <button>
-              <Minus size={14} />
-            </button>
-            <span>1</span>
-            <button>
-              <Plus size={14} />
-            </button>
-          </div>
+          <AddOrRemoveCoffee />
           <Cart>
             <ShoppingCartSimple size={20} weight="fill" />
           </Cart>

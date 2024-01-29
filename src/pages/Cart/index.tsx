@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Bank,
   CreditCard,
@@ -25,20 +25,64 @@ import {
 import { RadioInput } from '../../components/RadioInput'
 import { coffees } from '../../../data.json'
 import { Coffee } from '../../components/Coffee'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useCart } from '../../hooks/useCart'
+
+type FormInputs = {
+  zipCode: number
+  street: string
+  number: string
+  reference: string
+  neighbourhood: string
+  city: string
+  state: string
+  paymentMethod: 'credit' | 'debit' | 'cash'
+}
+
+const newOrder = z.object({
+  zipCode: z.number(),
+  street: z.string().min(1, 'Fill out the street name'),
+  number: z.string().min(1, 'Fill out the number'),
+  reference: z.string(),
+  neighbourhood: z.string().min(1, 'Fill out the Neighbourhood'),
+  city: z.string().min(1, 'Fill out the city name'),
+  state: z.string().min(1, 'Fill out the state name'),
+  paymentMethod: z.enum(['credit', 'debit', 'cash'], {
+    invalid_type_error: 'Select a payment method',
+  }),
+})
+
+export type OrderInfo = z.infer<typeof newOrder>
 
 export function Cart() {
-  const [paymentMethod, setPaymentMethod] = React.useState('')
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    resolver: zodResolver(newOrder),
+  })
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setPaymentMethod(event.target.value)
-    console.log(event.target.value)
+  const { cart, checkout, incrementItem, decrementItem, removeItem } = useCart()
+
+  const paymentMethod = watch('paymentMethod')
+
+  const handleOrderCheckout: SubmitHandler<FormInputs> = (data) => {
+    if (cart.length === 0) {
+      return alert('Cart empty!')
+    }
+
+    checkout(data)
   }
 
   return (
     <CartContainer>
       <AddressContainer>
         <Title>Complete your order</Title>
-        <form id="order">
+        <form id="order" onSubmit={handleSubmit(handleOrderCheckout)}>
           <AddressForm>
             <Header>
               <MapPinLine size={22} />
@@ -47,16 +91,43 @@ export function Cart() {
                 <p>Provide the address you want to receive your order at</p>
               </div>
             </Header>
-            <TextInput placeHolder="zip code" className="zipCode" />
-            <TextInput placeHolder="street" />
+            <TextInput
+              placeHolder="zip code"
+              className="zipCode"
+              error={errors.zipCode}
+              {...register('zipCode')}
+            />
+            <TextInput
+              placeHolder="street"
+              error={errors.street}
+              {...register('street')}
+            />
             <div>
-              <TextInput placeHolder="number" />
-              <TextInput placeHolder="reference" className="reference" />
+              <TextInput placeHolder="number" error={errors.number} />
+              <TextInput
+                placeHolder="reference"
+                className="reference"
+                error={errors.reference}
+                {...register('reference')}
+              />
             </div>
             <div>
-              <TextInput placeHolder="neighbourhood" />
-              <TextInput placeHolder="city" className="city" />
-              <TextInput placeHolder="state" />
+              <TextInput
+                placeHolder="neighbourhood"
+                error={errors.neighbourhood}
+                {...register('neighbourhood')}
+              />
+              <TextInput
+                placeHolder="city"
+                className="city"
+                error={errors.city}
+                {...register('city')}
+              />
+              <TextInput
+                placeHolder="state"
+                error={errors.state}
+                {...register('state')}
+              />
             </div>
           </AddressForm>
           <PaymentForm>
@@ -74,7 +145,7 @@ export function Cart() {
               <RadioInput
                 value="credit"
                 isSelected={paymentMethod === 'credit'}
-                onChange={handleChange}
+                {...register('paymentMethod')}
               >
                 <CreditCard size={16} />
                 <span>Credit card</span>
@@ -82,7 +153,7 @@ export function Cart() {
               <RadioInput
                 value="debit"
                 isSelected={paymentMethod === 'debit'}
-                onChange={handleChange}
+                {...register('paymentMethod')}
               >
                 <Bank size={16} />
                 <span>Debit card</span>
@@ -90,7 +161,7 @@ export function Cart() {
               <RadioInput
                 value="cash"
                 isSelected={paymentMethod === 'cash'}
-                onChange={handleChange}
+                {...register('paymentMethod')}
               >
                 <Money size={16} />
                 <span>Cash</span>
@@ -117,7 +188,9 @@ export function Cart() {
             <InfoTitle className="bold">total</InfoTitle>
             <InfoValue className="bold">33.2</InfoValue>
           </OrderInfo>
-          <Button>Confirm order</Button>
+          <Button type="submit" form="order">
+            Confirm order
+          </Button>
         </CoffeesList>
       </CoffeesContainer>
     </CartContainer>

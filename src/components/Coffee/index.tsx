@@ -1,12 +1,6 @@
-import {
-  AddOrRemoveCoffee,
-  CoffeeContainer,
-  RemoveCoffee,
-  Options,
-  Price,
-  Title,
-} from './styles'
-import { Minus, Plus, Trash } from 'phosphor-react'
+import { CoffeeContainer, RemoveCoffee, Options, Price, Title } from './styles'
+import { Trash } from 'phosphor-react'
+import { AddOrRemoveCoffee } from '../AddOrRemoveCoffee'
 
 interface Props {
   image: string
@@ -21,15 +15,7 @@ export function Coffee({ image, title, price }: Props) {
       <Options>
         <Title>{title}</Title>
         <div>
-          <AddOrRemoveCoffee>
-            <button>
-              <Minus size={14} />
-            </button>
-            <span>1</span>
-            <button>
-              <Plus size={14} />
-            </button>
-          </AddOrRemoveCoffee>
+          <AddOrRemoveCoffee />
           <RemoveCoffee>
             <Trash />
             Remove

@@ -11,8 +11,12 @@ import {
 import CoffeeCup from '../../assets/coffee-cup.svg'
 import { coffees } from '../../../data.json'
 import { Card } from '../../components/Card'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartProvider'
 
 export function Home() {
+  const { cart, addItem, removeItem, incrementItemQuantity } = useContext(CartContext)
+
   return (
     <HomeContainer>
       <InfoContainer>

@@ -45,7 +45,6 @@ export function Location() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setLocation((prevState) => ({
           ...prevState,
           city: data.address.city || data.address.town || data.address.village,

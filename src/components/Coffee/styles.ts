@@ -13,19 +13,6 @@ export const CoffeeContainer = styled.div`
     margin-right: 1.25rem;
   }
 `
-export const AddOrRemoveCoffee = styled.div`
-  display: flex;
-  gap: 0.25rem;
-  background: ${(props) => props.theme['base-button']};
-  padding: 0.5rem;
-  border-radius: 6px;
-
-  & > button {
-    background: ${(props) => props.theme['base-button']};
-    color: ${(props) => props.theme.purple};
-    cursor: pointer;
-  }
-`
 
 export const RemoveCoffee = styled.button`
   display: flex;
